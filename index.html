@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="Music"></marquee>
-        <marquee><h2 class="title">Music Name</h2></marquee>
-        <div class="player">
+    <div class="Music">
+       
+        <div class="player" style="align-self: center;">
+            <marquee><h2 class="title">Music Name</h2></marquee>
 
             <audio src=""></audio>
             <div class="btns">
@@ -30,12 +31,6 @@
         </div>
     </div>
     <script>
-         function openPopup() {
-            // Specify the URL of the page you want to open in the popup window
-            var url = "popup.html";
-            // Specify the name and attributes of the popup window
-            var popupWindow = window.open(url, "Popup", "width=600,height=400");
-        }
        
     
         const title = document.querySelector('.title');
@@ -47,122 +42,97 @@
         const timing = document.querySelector('.timing');
     
         const songList = [
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/songs/3500.mp3",
+        {
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/3500.mp3",
                 songName: "Travis Scott , Future , 2 Chainz - 3500 prod. Metro Boomin"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/allThemoney.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThemoney.mp3",
                 songName: "Metro Boomin , Gunna - All the money"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/allThewayIlive.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThewayIlive.mp3",
                 songName: "Metro Boomin , Future , Lil Uzi Vert - All the way that I live"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/amIdreaming.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/amIdreaming.mp3",
                 songName: "Metro Boomin , A$AP Rocky , Roisee - Am I dreaming"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/annhilate.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/annhilate.mp3",
                 songName: "Metro Boomin , Swae Lee , Lil Wayne , Offset - Annhilate"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/aroundMe.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/aroundMe.mp3",
                 songName: "Metro Boomin , Don Toliver - Around me"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/badAndboujee.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/badAndboujee.mp3",
                 songName: "Migos , Lil Uzi Vert - Bad and boujee prod. Metro Boomin"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/bankAcc.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bankAcc.mp3",
                 songName: "21 Savage - Bank account prod. Metro Boomin"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/bounceBack.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bounceBack.mp3",
                 songName: " Big Sean - Bounce Back prod. Metro Boomin"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/calling.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/calling.mp3",
                 songName: "Metro Boomin , Swae Lee , NAV  - Calling"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/songs/congratulations.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/congratulations.mp3",
                 songName: "Post Malone , Quavo - Congratulations prod. Metro Boomin"
             },
             
-
-          
         ];
-    
-        let shuffledSongs = shuffle(songList); // Shuffle the song list
-        let currentSongIndex = 0;
     
         function playSong() {
             audio.play();
             playPause.classList.add('active');
             playPause.innerHTML = "<ion-icon name='pause-outline'></ion-icon>";
-            
         }
-    
+
         function pauseSong() {
             audio.pause();
             playPause.classList.remove('active');
             playPause.innerHTML = "<ion-icon name='play-outline'></ion-icon>";
         }
-    
+
         function loadSong(song) {
             title.textContent = song.songName;
             audio.src = song.path;
         }
-    
+
         function prevSong() {
             currentSongIndex = (currentSongIndex - 1 + shuffledSongs.length) % shuffledSongs.length;
             loadSong(shuffledSongs[currentSongIndex]);
             playSong();
         }
-    
+
         function nextSong() {
             currentSongIndex = (currentSongIndex + 1) % shuffledSongs.length;
             loadSong(shuffledSongs[currentSongIndex]);
             playSong();
         }
-    
+
         function updateProgress() {
             const progressPercent = (audio.currentTime / audio.duration) * 100;
             progress.value = progressPercent;
-    
+
             const currentMinutes = Math.floor(audio.currentTime / 60);
             const currentSeconds = Math.floor(audio.currentTime % 60);
             const durationMinutes = Math.floor(audio.duration / 60);
             const durationSeconds = Math.floor(audio.duration % 60);
             timing.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds} / ${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
         }
-    
-        function shuffle(array) {
-            let currentIndex = array.length, temporaryValue, randomIndex;
-    
-            // While there remain elements to shuffle...
-            while (0 !== currentIndex) {
-    
-                // Pick a remaining element...
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-    
-                // And swap it with the current element.
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-    
-            return array;
-        }
-    
+
         audio.addEventListener('ended', () => {
             nextSong();
         });
-    
+
         playPause.addEventListener('click', () => {
             if (audio.paused) {
                 playSong();
@@ -170,17 +140,48 @@
                 pauseSong();
             }
         });
-        
-    
+
         prev.addEventListener('click', prevSong);
+
         next.addEventListener('click', nextSong);
-    
-        // Load the first song and start playing
+
+        audio.addEventListener('timeupdate', updateProgress);
+
+        progress.addEventListener('click', (event) => {
+            const clickedTime = (event.offsetX / progress.offsetWidth) * audio.duration;
+            audio.currentTime = clickedTime;
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'MediaTrackPrevious') { // Previous button on some keyboards
+                prevSong();
+            } else if (event.key === 'MediaTrackNext') { // Next button on some keyboards
+                nextSong();
+            }
+        });
+
+        let shuffledSongs = shuffle(songList);
+        let currentSongIndex = 0;
+
         loadSong(shuffledSongs[currentSongIndex]);
         playSong();
+
+        function shuffle(array) {
+            let currentIndex = array.length, temporaryValue, randomIndex;
+
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+            
+        }
     
-        // Update progress bar and timing
-        audio.addEventListener('timeupdate', updateProgress);
+       
     </script>
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
