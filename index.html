@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metroo Boomin radio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="Music"></marquee>
+        <marquee><h2 class="title">Music Name</h2></marquee>
+        <div class="player">
+
+            <audio src=""></audio>
+            <div class="btns">
+                <span class="prev">
+                    <ion-icon name="play-back-outline"></ion-icon>
+                </span>
+                <span class="playPause active">
+                    <ion-icon name="play-outline"></ion-icon>
+                </span>
+                <span class="next">
+                    <ion-icon name="play-forward-outline"></ion-icon>
+                </span>
+            </div>
+            <div class="progress-container">
+                <progress class="progress" value="0" max="100"></progress>
+                <div class="timing">0:00 / 0:00</div>
+            </div>
+        </div>
+    </div>
+    <script>
+         function openPopup() {
+            // Specify the URL of the page you want to open in the popup window
+            var url = "popup.html";
+            // Specify the name and attributes of the popup window
+            var popupWindow = window.open(url, "Popup", "width=600,height=400");
+        }
+       
+    
+        const title = document.querySelector('.title');
+        const prev = document.querySelector('.prev');
+        const playPause = document.querySelector('.playPause');
+        const next = document.querySelector('.next');
+        const audio = document.querySelector('audio');
+        const progress = document.querySelector('.progress');
+        const timing = document.querySelector('.timing');
+    
+        const songList = [
+            {
+                path: "music.mp3",
+                songName: "Around Me"
+            },
+            {
+                path: "music.mp3",
+                songName: "Around Me2"
+            },
+            {
+                path: "music.mp3",
+                songName: "Around Me3"
+            },
+            {
+                path: "music.mp3",
+                songName: "Around Me24"
+            },
+            {
+                path: "music.mp3",
+                songName: "Around Me5"
+            },
+            {
+                path: "music.mp3",
+                songName: "Around Me25"
+            }
+        ];
+    
+        let shuffledSongs = shuffle(songList); // Shuffle the song list
+        let currentSongIndex = 0;
+    
+        function playSong() {
+            audio.play();
+            playPause.classList.add('active');
+            playPause.innerHTML = "<ion-icon name='pause-outline'></ion-icon>";
+            
+        }
+    
+        function pauseSong() {
+            audio.pause();
+            playPause.classList.remove('active');
+            playPause.innerHTML = "<ion-icon name='play-outline'></ion-icon>";
+        }
+    
+        function loadSong(song) {
+            title.textContent = song.songName;
+            audio.src = song.path;
+        }
+    
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + shuffledSongs.length) % shuffledSongs.length;
+            loadSong(shuffledSongs[currentSongIndex]);
+            playSong();
+        }
+    
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % shuffledSongs.length;
+            loadSong(shuffledSongs[currentSongIndex]);
+            playSong();
+        }
+    
+        function updateProgress() {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progress.value = progressPercent;
+    
+            const currentMinutes = Math.floor(audio.currentTime / 60);
+            const currentSeconds = Math.floor(audio.currentTime % 60);
+            const durationMinutes = Math.floor(audio.duration / 60);
+            const durationSeconds = Math.floor(audio.duration % 60);
+            timing.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds} / ${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
+        }
+    
+        function shuffle(array) {
+            let currentIndex = array.length, temporaryValue, randomIndex;
+    
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+    
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+    
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+    
+            return array;
+        }
+    
+        audio.addEventListener('ended', () => {
+            nextSong();
+        });
+    
+        playPause.addEventListener('click', () => {
+            if (audio.paused) {
+                playSong();
+            } else {
+                pauseSong();
+            }
+        });
+        
+    
+        prev.addEventListener('click', prevSong);
+        next.addEventListener('click', nextSong);
+    
+        // Load the first song and start playing
+        loadSong(shuffledSongs[currentSongIndex]);
+        playSong();
+    
+        // Update progress bar and timing
+        audio.addEventListener('timeupdate', updateProgress);
+    </script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+</body>
+</html>
