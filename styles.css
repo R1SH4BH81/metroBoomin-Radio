@@ -53,8 +53,8 @@ body{
 
 }
 .download{
-    margin-top:30px;
-    margin-bottom: -20px;
+    margin-top:10px;
+    margin-bottom: -10px;
 }
 .player-green-border {
     border: 4px solid rgba(4, 255, 0, 0.664); /* Green border */
