@@ -42,7 +42,7 @@ body{
     width: 500px;
     min-width: 100px;
     background: #fbfbfb48;
-    border: 2px solid #ffffff8c;
+    border: 2px solid #ffffff5c;
     border-radius: 80px;
     padding: 20px;
     box-shadow: -10px -10px 15px #000000,
@@ -52,6 +52,13 @@ body{
 
 
 }
+.download{
+    margin-top:30px;
+    margin-bottom: -20px;
+}
+.player-green-border {
+    border: 4px solid rgba(4, 255, 0, 0.664); /* Green border */
+  }
 .btns{
     position: relative;
     display: flex;
@@ -59,7 +66,18 @@ body{
     align-items: center;
     width: 100%;
 }
-.btns span{
+.btns1{
+    position: relative;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 30px;
+    justify-content: space-between;
+    
+    align-items: center;
+    width: 80%;
+}
+.btns span,
+.btns1 span{
     position: relative;
     width: 80px;
     height: 80px;
@@ -77,7 +95,9 @@ body{
 
 }
 .btns span.active,
-.btns span:active{
+.btns span:active,
+.btns1 span.active,
+.btns1 span:active{
     color: #ff669a;
     box-shadow: inset 0 -7px 5px rgba(0,0,0,0.25),
                 inset 0 5px 10px rgba(0,0,0,0.15);
@@ -98,7 +118,9 @@ body{
     display: flex;
     align-items: center;
 }
-
+.down{
+    size: 2em;
+}
 .progress {
     flex-grow: 1;
     height: 10px;
@@ -117,6 +139,10 @@ body{
     font-size: 1em;
     
 }
+.wifi-icon {
+    color: inherit; /* Inherit color */
+    font-size: 48px; /* Adjust font size */
+  }
 
 
 
@@ -134,5 +160,68 @@ body{
     background-color: #4caf50;
     border-radius: 5px;
 }
+/* Define the keyframes for the marquee animation */
+@keyframes marquee {
+    0%   { transform: translateX(100%); } /* Move marquee to the right */
+    100% { transform: translateX(-100%); } /* Move marquee to the left */
+}
+
+/* Apply the animation to the marquee element */
+.marquee {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    animation: marquee 5s linear infinite; /* Adjust the animation duration to control speed */
+}
 
 /* Update the color and border-radius as needed */
+/* Media query for Android devices */
+@media only screen and (max-width: 767px) and (min-width: 360px) {
+    .player{
+        position: relative;
+        width: 400px;
+        min-width: 100px;
+        height: 600px;
+        
+    
+    
+    }
+    
+    .title{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .progress-container {
+        justify-content: space-between;
+        display: block;
+    }
+    .progress {
+    
+        
+        margin-top: 80px;
+        width: 100%;
+        margin-left: 2px;
+        
+        
+        background-color: #f0f0f03e;
+        border-radius: 5px;
+        overflow: hidden;
+        display: block;
+         /* Adjust as needed */
+    }
+    .timing {
+        
+        font-size: 3em;
+        margin-top: 20px;
+        display: block;
+        margin-left: 50px;
+    }
+    .down{
+        size: 3em;
+    }
+  }
+  
+  /* Media query for iPhone devices */
+  @media only screen and (max-width: 414px) {
+    /* Your styles for iPhone devices here */
+  }
+  
