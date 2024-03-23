@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metroo Boomin radio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
     <div class="Music">
@@ -23,6 +27,16 @@
                 <span class="next">
                     <ion-icon name="play-forward-outline"></ion-icon>
                 </span>
+                
+            </div>
+            <div class="download"><div class="btns1">
+                <span class="down" onclick="openNewTab()">
+                    <ion-icon name="cloud-download-outline"></ion-icon>
+                </span>
+                <span class="data" onclick ="data()">
+                    <ion-icon name="wifi-outline"></ion-icon>
+                </span>
+            </div>
             </div>
             <div class="progress-container">
                 <progress class="progress" value="0" max="100"></progress>
@@ -40,7 +54,10 @@
         const audio = document.querySelector('audio');
         const progress = document.querySelector('.progress');
         const timing = document.querySelector('.timing');
-    
+        const downButton = document.querySelector('.down');
+
+
+
         const songList = [
         {
                 path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/3500.mp3",
@@ -211,7 +228,7 @@
                 songName: "Metro Boomin , 21 Savage , Young Nudy - Umbrella"
             },
             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/walkemdown.mp3",
+                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/walkendown.mp3",
                 songName: " NLE Choppa , Roddy Rich - Walk Em Down prod. Metro Boomin"
             },
             {
@@ -297,12 +314,26 @@
             */
             
         ];
+        downButton.addEventListener('click', function() {
+    // Retrieve the path of the file
+        const filePath = song.path;
+    // Open the file path in a new tab
+        openNewTab(filePath);
+});
+
+
     
         function playSong() {
             audio.play();
             playPause.classList.add('active');
             playPause.innerHTML = "<ion-icon name='pause-outline'></ion-icon>";
         }
+        function openNewTab() {   
+            var url = audio.src;
+            window.open(url, '_blank');
+}
+
+      
 
         function pauseSong() {
             audio.pause();
@@ -392,6 +423,40 @@
     
        
     </script>
+<script>
+    var dataSaverEnabled = false; // Variable to track data saver mode
+    
+    function data() {
+        // Toggle data saver mode
+        dataSaverEnabled = !dataSaverEnabled;
+    
+        // Show SweetAlert message based on data saver mode with timer
+        if (dataSaverEnabled) {
+            Swal.fire({
+                text: 'Data Saver ✅',
+                showConfirmButton: false, // Hide the confirmation button
+                timer: 2000 // Auto-dismiss after 2 seconds
+            });
+        } else {
+            Swal.fire({
+                text: 'Data Saver ❌',
+                showConfirmButton: false, // Hide the confirmation button
+                timer: 2000 // Auto-dismiss after 2 seconds
+            });
+        }
+    
+        // Change border color of the player based on data saver mode
+        var playerElement = document.querySelector('.player');
+        if (playerElement) {
+            if (dataSaverEnabled) {
+                playerElement.classList.add('player-green-border');
+            } else {
+                playerElement.classList.remove('player-green-border');
+            }
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
