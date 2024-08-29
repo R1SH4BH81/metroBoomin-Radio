@@ -1,464 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metroo Boomin Radio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="Public/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="Public/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="Public/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-    <div class="Music">
-       
-        <div class="player" style="align-self: center;">
-            <marquee><h2 class="title">Music Name</h2></marquee>
-
-            <audio src=""></audio>
-            <div class="btns">
-                <span class="prev">
-                    <ion-icon name="play-back-outline"></ion-icon>
-                </span>
-                <span class="playPause active">
-                    <ion-icon name="play-outline"></ion-icon>
-                </span>
-                <span class="next">
-                    <ion-icon name="play-forward-outline"></ion-icon>
-                </span>
-                
-            </div>
-            <div class="download"><div class="btns1">
-                <span class="down" onclick="openNewTab()">
-                    <ion-icon name="cloud-download-outline"></ion-icon>
-                </span>
-                <span class="data" onclick ="data()">
-                    <ion-icon name="wifi-outline"></ion-icon>
-                </span>
-            </div>
-            </div>
-            <div class="progress-container">
-                <progress class="progress" value="0" max="100"></progress>
-                <div class="timing">0:00 / 0:00</div>
-            </div>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="Public/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="Public/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="Public/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div id="loader" class="card">
+      <div class="loader">
+        <p>loading</p>
+        <div class="words">
+          <span class="word">Music</span>
+          <span class="word">Metro Boomin</span>
+          <span class="word">G.O.A.T</span>
+          <span class="word">Hip Hop</span>
+          <span class="word">HitLists</span>
         </div>
+      </div>
     </div>
+
+    <!-- Main Content -->
+    <div id="content" style="display: none">
+      <div class="Music">
+        <div class="player" style="align-self: center">
+          <div class="scrolling-title">
+            <h2 class="title">Music Name</h2>
+          </div>
+
+          <audio src="" autoplay></audio>
+          <div class="btns">
+            <span class="prev">
+              <ion-icon name="play-back-outline"></ion-icon>
+            </span>
+            <span class="playPause active">
+              <ion-icon name="pause-outline"></ion-icon>
+            </span>
+            <span class="next">
+              <ion-icon name="play-forward-outline"></ion-icon>
+            </span>
+          </div>
+          <div class="download">
+            <div class="btns1">
+              <span class="down" onclick="openNewTab()">
+                <ion-icon name="cloud-download-outline"></ion-icon>
+              </span>
+              <span class="data" onclick="data()">
+                <ion-icon name="wifi-outline"></ion-icon>
+              </span>
+            </div>
+          </div>
+          <div class="progress-container">
+            <progress class="progress" value="0" max="100"></progress>
+            <div class="timing">0:00 / 0:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
     <script>
-       
-    
-        const title = document.querySelector('.title');
-        const prev = document.querySelector('.prev');
-        const playPause = document.querySelector('.playPause');
-        const next = document.querySelector('.next');
-        const audio = document.querySelector('audio');
-        const progress = document.querySelector('.progress');
-        const timing = document.querySelector('.timing');
-        const downButton = document.querySelector('.down');
+      window.addEventListener("load", function () {
+        // Hide the loader after content is loaded
+        document.getElementById("loader").style.display = "none";
 
+        // Show the content
+        const content = document.getElementById("content");
+        content.style.display = "block";
 
+        // Optionally, you can trigger the play button to start the audio if autoplay is blocked
+        const playPauseBtn = content.querySelector(".playPause ion-icon");
+        playPauseBtn.name = "pause-outline"; // Change icon to pause if autoplay works
+      });
+    </script>
 
-        const songList = [
+    <!-- CSS for Scrolling Effect -->
+    <style>
+      .scrolling-title {
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .scrolling-title .title {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll 7s linear infinite;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+    </style>
+
+    <script>
+      const title = document.querySelector(".title");
+      const prev = document.querySelector(".prev");
+      const playPause = document.querySelector(".playPause");
+      const next = document.querySelector(".next");
+      const audio = document.querySelector("audio");
+      const progress = document.querySelector(".progress");
+      const timing = document.querySelector(".timing");
+      const downButton = document.querySelector(".down");
+
+      const songList = [
         {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/3500.mp3",
-                songName: "Travis Scott , Future , 2 Chainz - 3500 prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThemoney.mp3",
-                songName: "Metro Boomin , Gunna - All the money"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThewayIlive.mp3",
-                songName: "Metro Boomin , Future , Lil Uzi Vert - All the way that I live"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/amIdreaming.mp3",
-                songName: "Metro Boomin , A$AP Rocky , Roisee - Am I dreaming"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/annhilate.mp3",
-                songName: "Metro Boomin , Swae Lee , Lil Wayne , Offset - Annhilate"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/aroundMe.mp3",
-                songName: "Metro Boomin , Don Toliver - Around me"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/badAndboujee.mp3",
-                songName: "Migos , Lil Uzi Vert - Bad and boujee prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bankAcc.mp3",
-                songName: "21 Savage - Bank account prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bounceBack.mp3",
-                songName: " Big Sean - Bounce Back prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/calling.mp3",
-                songName: "Metro Boomin , Swae Lee , NAV  - Calling"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/congratulations.mp3",
-                songName: "Post Malone , Quavo - Congratulations prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/danger.mp3",
-                songName: "Offset , JID -Danger(Spider) prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/fatherStrechmyHands.mp3",
-                songName: " Kanye West - Father Strech My Hands Pt.1 prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/feelThefiyaah.mp3",
-            songName: "Metro Boomin ,A$AP Rocky , Takeoff - Feel the fiyaah"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/givinUp.mp3",
-                songName:"Don Toliver , 21 savage , 2 Chainz -Givin'Up(Not the one) prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/heartless.mp3",
-                songName: " The Weeknd - Heartless prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/home.mp3",
-                songName: "Metro Boomin , Don Toliver , Lil Uzi Vert - Home"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/hummingbird.mp3",
-                songName: "Metro Boomin , James Blake - Hummingbird"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/iCantsaveYou.mp3",
-                songName: " Metro Boomin , Future , Don Toliver - I Can't Save You(Interlude)[with Future]"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/jumpman.mp3",
-                songName: " Drake , Future - Jumpman prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/knifeTalk.mp3",
-                songName: " Drake , 21 Savage , Project Pat - Knife Talk prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/linkUp.mp3",
-                songName: "Metro Boomin, Don Toliver , WizKid , Beam , Toian - Link Up"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/lockOnme.mp3",
-                songName: "Metro Boomin  , Travis Scott , Future - Lock on me"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/lowlife.mp3",
-                songName: " Future , The Weeknd - Low Life prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/mamacita.mp3",
-                songName: " Travis Scott , Rich Homie Quan , Young THUG - Mamacita prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/maskoff.mp3",
-                songName: " Future - Mask Off prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/metrospider.mp3",
-                songName: "Metro Boomin , Young THUG - Metro Spider"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/nasMorales.mp3",
-                songName: "Metro Boomin , Nas - Nas Morales"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/niagraFalls.mp3",
-                songName: "Metro Boomin , Travis Scott , 21 Savage - Niagara Falls(Foot or 2)"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/noComplains.mp3",
-                songName: "Metro Boomin , Offset , Drake - No Complains"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/nonViolentcommunity.mp3",
-                songName: "Metro Boomin , James Blake , A$AP Rocky , 21 Savage- Non-Violent Community"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/onTime.mp3",
-                songName: "Metro Boomin , John Legend - On Time"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/raindrop.mp3",
-                songName: "Metro Boomin , Travis Scott - Raindrop"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/ricFlairdrip.mp3",
-                songName: " Offset, Metro Boomin - Ric Flair Drip"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/runin.mp3",
-                songName: "21 savage , Metro Boomin - Runin"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/selfLove.mp3",
-                songName: "Metro Boomin , Coi Leray - Self Love"
-            },
-             
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/skyfall.mp3",
-                songName: " Travis Scott , Young THUG - Sky Fall prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/superhero.mp3",
-                songName: "Metro Boomin , Future , Chris Brown - Superhero"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/tooManyNights.mp3",
-                songName: "Metro Boomin ,Future , Don Toliver - Too Many Nights"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/trance.mp3",
-                songName: "Metro Boomin , Travis Scott , Young THUG - Trance"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/umbrella.mp3",
-                songName: "Metro Boomin , 21 Savage , Young Nudy - Umbrella"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/walkemdown.mp3",
-                songName: " NLE Choppa , Roddy Rich - Walk Em Down prod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/waves.mp3",
-                songName: " Kanye West - Wavesprod. Metro Boomin"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/wicked.mp3",
-                songName: " Future - Wicked prod. Metro Boomin"
-            },
-         {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/aintNolove.mp3",
-                songName: "Future , Metro Boomin - Ain't No Love"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/cindrella.mp3",
-                songName: "Future , Metro Boomin - Cindrella"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/claustrophobic.mp3",
-                songName: "Future , Metro Boomin - Claustrophobic"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/everydayHustle.mp3",
-                songName: "Future , Metro Boomin - Everyday Hustle"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/fried.mp3",
-                songName: "Future , Metro Boomin - Fried"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/gta.mp3",
-                songName: "Future , Metro Boomin - GTA"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/iceAttack.mp3",
-                songName: "Future , Metro Boomin - Ice Attack"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/likeThat.mp3",
-                songName: "Future , Metro Boomin - Like That"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/magicDonjuan.mp3",
-                songName: "Future , Metro Boomin - Magic Donjuan"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/runninOuttatime.mp3",
-                songName: "Future , Metro Boomin - Runnin Outta Time"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/seenItall.mp3",
-                songName: "Future , Metro Boomin - Seen It All"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/slimedIn.mp3",
-                songName: "Future , Metro Boomin - Slimed In"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/typeShit.mp3",
-                songName: " Future , Metro Boomin - Type Shit"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WeDontTrustYou.mp3",
-                songName: "Future , Metro Boomin - We Don't Trust You"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WhereMyTwin.mp3",
-                songName: "Future , Metro Boomin - Where My Twin"
-            },
-             {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WTFYM.mp3",
-                songName: "Future , Metro Boomin - WTFYM"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/YoungMetro.mp3",
-                songName: "Future , Metro Boomin - Young Metro"
-            },
-            {
-                path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/RichNiggaShit.mp3",
-                songName: " 21 Savage , Metro Boomin , Young THUG- Rich Nigga Shit"
-            },
-            
-            
-        ];
-        downButton.addEventListener('click', function() {
-    // Retrieve the path of the file
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/3500.mp3",
+          songName:
+            "Travis Scott , Future , 2 Chainz - 3500 prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThemoney.mp3",
+          songName: "Metro Boomin , Gunna - All the money",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/allThewayIlive.mp3",
+          songName:
+            "Metro Boomin , Future , Lil Uzi Vert - All the way that I live",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/amIdreaming.mp3",
+          songName: "Metro Boomin , A$AP Rocky , Roisee - Am I dreaming",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/annhilate.mp3",
+          songName: "Metro Boomin , Swae Lee , Lil Wayne , Offset - Annhilate",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/aroundMe.mp3",
+          songName: "Metro Boomin , Don Toliver - Around me",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/badAndboujee.mp3",
+          songName: "Migos , Lil Uzi Vert - Bad and boujee prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bankAcc.mp3",
+          songName: "21 Savage - Bank account prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/bounceBack.mp3",
+          songName: " Big Sean - Bounce Back prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/calling.mp3",
+          songName: "Metro Boomin , Swae Lee , NAV  - Calling",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/congratulations.mp3",
+          songName: "Post Malone , Quavo - Congratulations prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/danger.mp3",
+          songName: "Offset , JID -Danger(Spider) prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/fatherStrechmyHands.mp3",
+          songName:
+            " Kanye West - Father Strech My Hands Pt.1 prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/feelThefiyaah.mp3",
+          songName: "Metro Boomin ,A$AP Rocky , Takeoff - Feel the fiyaah",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/givinUp.mp3",
+          songName:
+            "Don Toliver , 21 savage , 2 Chainz -Givin'Up(Not the one) prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/heartless.mp3",
+          songName: " The Weeknd - Heartless prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/home.mp3",
+          songName: "Metro Boomin , Don Toliver , Lil Uzi Vert - Home",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/hummingbird.mp3",
+          songName: "Metro Boomin , James Blake - Hummingbird",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/iCantsaveYou.mp3",
+          songName:
+            " Metro Boomin , Future , Don Toliver - I Can't Save You(Interlude)[with Future]",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/jumpman.mp3",
+          songName: " Drake , Future - Jumpman prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/knifeTalk.mp3",
+          songName:
+            " Drake , 21 Savage , Project Pat - Knife Talk prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/linkUp.mp3",
+          songName:
+            "Metro Boomin, Don Toliver , WizKid , Beam , Toian - Link Up",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/lockOnme.mp3",
+          songName: "Metro Boomin  , Travis Scott , Future - Lock on me",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/lowlife.mp3",
+          songName: " Future , The Weeknd - Low Life prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/mamacita.mp3",
+          songName:
+            " Travis Scott , Rich Homie Quan , Young THUG - Mamacita prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/maskoff.mp3",
+          songName: " Future - Mask Off prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/metrospider.mp3",
+          songName: "Metro Boomin , Young THUG - Metro Spider",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/nasMorales.mp3",
+          songName: "Metro Boomin , Nas - Nas Morales",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/niagraFalls.mp3",
+          songName:
+            "Metro Boomin , Travis Scott , 21 Savage - Niagara Falls(Foot or 2)",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/noComplains.mp3",
+          songName: "Metro Boomin , Offset , Drake - No Complains",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/nonViolentcommunity.mp3",
+          songName:
+            "Metro Boomin , James Blake , A$AP Rocky , 21 Savage- Non-Violent Community",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/onTime.mp3",
+          songName: "Metro Boomin , John Legend - On Time",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/raindrop.mp3",
+          songName: "Metro Boomin , Travis Scott - Raindrop",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/ricFlairdrip.mp3",
+          songName: " Offset, Metro Boomin - Ric Flair Drip",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/runin.mp3",
+          songName: "21 savage , Metro Boomin - Runin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/selfLove.mp3",
+          songName: "Metro Boomin , Coi Leray - Self Love",
+        },
+
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/skyfall.mp3",
+          songName: " Travis Scott , Young THUG - Sky Fall prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/superhero.mp3",
+          songName: "Metro Boomin , Future , Chris Brown - Superhero",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/tooManyNights.mp3",
+          songName: "Metro Boomin ,Future , Don Toliver - Too Many Nights",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/trance.mp3",
+          songName: "Metro Boomin , Travis Scott , Young THUG - Trance",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/umbrella.mp3",
+          songName: "Metro Boomin , 21 Savage , Young Nudy - Umbrella",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/walkemdown.mp3",
+          songName:
+            " NLE Choppa , Roddy Rich - Walk Em Down prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/waves.mp3",
+          songName: " Kanye West - Wavesprod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/wicked.mp3",
+          songName: " Future - Wicked prod. Metro Boomin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/aintNolove.mp3",
+          songName: "Future , Metro Boomin - Ain't No Love",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/cindrella.mp3",
+          songName: "Future , Metro Boomin - Cindrella",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/claustrophobic.mp3",
+          songName: "Future , Metro Boomin - Claustrophobic",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/everydayHustle.mp3",
+          songName: "Future , Metro Boomin - Everyday Hustle",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/fried.mp3",
+          songName: "Future , Metro Boomin - Fried",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/gta.mp3",
+          songName: "Future , Metro Boomin - GTA",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/iceAttack.mp3",
+          songName: "Future , Metro Boomin - Ice Attack",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/likeThat.mp3",
+          songName: "Future , Metro Boomin - Like That",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/magicDonjuan.mp3",
+          songName: "Future , Metro Boomin - Magic Donjuan",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/runninOuttatime.mp3",
+          songName: "Future , Metro Boomin - Runnin Outta Time",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/seenItall.mp3",
+          songName: "Future , Metro Boomin - Seen It All",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/slimedIn.mp3",
+          songName: "Future , Metro Boomin - Slimed In",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/typeShit.mp3",
+          songName: " Future , Metro Boomin - Type Shit",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WeDontTrustYou.mp3",
+          songName: "Future , Metro Boomin - We Don't Trust You",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WhereMyTwin.mp3",
+          songName: "Future , Metro Boomin - Where My Twin",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/WTFYM.mp3",
+          songName: "Future , Metro Boomin - WTFYM",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/YoungMetro.mp3",
+          songName: "Future , Metro Boomin - Young Metro",
+        },
+        {
+          path: "https://raw.githubusercontent.com/R1SH4BH81/metroBoomin-Radio/master/songs/RichNiggaShit.mp3",
+          songName: " 21 Savage , Metro Boomin , Young THUG- Rich Nigga Shit",
+        },
+      ];
+      downButton.addEventListener("click", function () {
+        // Retrieve the path of the file
         const filePath = song.path;
-    // Open the file path in a new tab
+        // Open the file path in a new tab
         openNewTab(filePath);
-});
+      });
 
+      function playSong() {
+        audio.play();
+        playPause.classList.add("active");
+        playPause.innerHTML =
+          "<ion-icon name='musical-notes-outline'></ion-icon>";
+      }
+      function openNewTab() {
+        var url = audio.src;
+        window.open(url, "_blank");
+      }
 
-    
-        function playSong() {
-            audio.play();
-            playPause.classList.add('active');
-            playPause.innerHTML = "<ion-icon name='musical-notes-outline'></ion-icon>";
-        }
-        function openNewTab() {   
-            var url = audio.src;
-            window.open(url, '_blank');
-}
+      function pauseSong() {
+        audio.pause();
+        playPause.classList.remove("active");
+        playPause.innerHTML =
+          "<ion-icon name='musical-notes-outline'></ion-icon>";
+      }
 
-      
+      function loadSong(song) {
+        title.textContent = song.songName;
+        audio.src = song.path;
+      }
 
-        function pauseSong() {
-            audio.pause();
-            playPause.classList.remove('active');
-            playPause.innerHTML = "<ion-icon name='musical-notes-outline'></ion-icon>";
-        }
-
-        function loadSong(song) {
-            title.textContent = song.songName;
-            audio.src = song.path;
-        }
-
-        function prevSong() {
-            currentSongIndex = (currentSongIndex - 1 + shuffledSongs.length) % shuffledSongs.length;
-            loadSong(shuffledSongs[currentSongIndex]);
-            playSong();
-        }
-
-        function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % shuffledSongs.length;
-            loadSong(shuffledSongs[currentSongIndex]);
-            playSong();
-        }
-
-        function updateProgress() {
-            const progressPercent = (audio.currentTime / audio.duration) * 100;
-            progress.value = progressPercent;
-
-            const currentMinutes = Math.floor(audio.currentTime / 60);
-            const currentSeconds = Math.floor(audio.currentTime % 60);
-            const durationMinutes = Math.floor(audio.duration / 60);
-            const durationSeconds = Math.floor(audio.duration % 60);
-            timing.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds} / ${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
-        }
-
-        audio.addEventListener('ended', () => {
-            nextSong();
-        });
-
-        playPause.addEventListener('click', () => {
-            if (audio.paused) {
-                playSong();
-            } else {
-                pauseSong();
-            }
-        });
-
-        prev.addEventListener('click', prevSong);
-
-        next.addEventListener('click', nextSong);
-
-        audio.addEventListener('timeupdate', updateProgress);
-
-        progress.addEventListener('click', (event) => {
-            const clickedTime = (event.offsetX / progress.offsetWidth) * audio.duration;
-            audio.currentTime = clickedTime;
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'MediaTrackPrevious') { // Previous button on some keyboards
-                prevSong();
-            } else if (event.key === 'MediaTrackNext') { // Next button on some keyboards
-                nextSong();
-            }
-        });
-
-        let shuffledSongs = shuffle(songList);
-        let currentSongIndex = 0;
-
+      function prevSong() {
+        currentSongIndex =
+          (currentSongIndex - 1 + shuffledSongs.length) % shuffledSongs.length;
         loadSong(shuffledSongs[currentSongIndex]);
         playSong();
+      }
 
-        function shuffle(array) {
-            let currentIndex = array.length, temporaryValue, randomIndex;
+      function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % shuffledSongs.length;
+        loadSong(shuffledSongs[currentSongIndex]);
+        playSong();
+      }
 
-            while (0 !== currentIndex) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-
-            return array;
-            
+      function updateProgress() {
+        // Ensure `audio`, `progress`, and `timing` are defined
+        if (!audio || !progress || !timing) {
+          console.error("Audio, progress, or timing element not defined.");
+          return;
         }
-        
-       
+
+        // Get current time and duration
+        const currentTime = audio.currentTime;
+        const duration = audio.duration;
+
+        // Check if duration is finite and greater than zero
+        if (isFinite(duration) && duration > 0) {
+          const progressPercent = (currentTime / duration) * 100;
+          progress.value = progressPercent;
+
+          // Calculate time
+          const currentMinutes = Math.floor(currentTime / 60);
+          const currentSeconds = Math.floor(currentTime % 60);
+          const durationMinutes = Math.floor(duration / 60);
+          const durationSeconds = Math.floor(duration % 60);
+
+          // Format time
+          timing.textContent = `${currentMinutes}:${
+            currentSeconds < 10 ? "0" : ""
+          }${currentSeconds} / ${durationMinutes}:${
+            durationSeconds < 10 ? "0" : ""
+          }${durationSeconds}`;
+        } else {
+          // Handle the case where duration is not yet available
+          progress.value = 0;
+          timing.textContent = "0:00 / 0:00";
+        }
+      }
+
+      audio.addEventListener("ended", () => {
+        nextSong();
+      });
+
+      playPause.addEventListener("click", () => {
+        if (audio.paused) {
+          playSong();
+        } else {
+          pauseSong();
+        }
+      });
+
+      prev.addEventListener("click", prevSong);
+
+      next.addEventListener("click", nextSong);
+
+      audio.addEventListener("timeupdate", updateProgress);
+
+      progress.addEventListener("click", (event) => {
+        const clickedTime =
+          (event.offsetX / progress.offsetWidth) * audio.duration;
+        audio.currentTime = clickedTime;
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "MediaTrackPrevious") {
+          // Previous button on some keyboards
+          prevSong();
+        } else if (event.key === "MediaTrackNext") {
+          // Next button on some keyboards
+          nextSong();
+        }
+      });
+
+      let shuffledSongs = shuffle(songList);
+      let currentSongIndex = 0;
+
+      loadSong(shuffledSongs[currentSongIndex]);
+      playSong();
+
+      function shuffle(array) {
+        let currentIndex = array.length,
+          temporaryValue,
+          randomIndex;
+
+        while (0 !== currentIndex) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+      }
     </script>
-<script>
-    var dataSaverEnabled = false; // Variable to track data saver mode
-    
-    function data() {
+    <script>
+      var dataSaverEnabled = false; // Variable to track data saver mode
+
+      function data() {
         // Toggle data saver mode
         dataSaverEnabled = !dataSaverEnabled;
-    
+
         // Show SweetAlert message based on data saver mode with timer
         if (dataSaverEnabled) {
-            Swal.fire({
-                text: 'Data Saver ✅',
-                showConfirmButton: false, // Hide the confirmation button
-                timer: 2000 // Auto-dismiss after 2 seconds
-            });
+          Swal.fire({
+            text: "Data Saver ✅",
+            showConfirmButton: false, // Hide the confirmation button
+            timer: 2000, // Auto-dismiss after 2 seconds
+          });
         } else {
-            Swal.fire({
-                text: 'Data Saver ❌',
-                showConfirmButton: false, // Hide the confirmation button
-                timer: 2000 // Auto-dismiss after 2 seconds
-            });
+          Swal.fire({
+            text: "Data Saver ❌",
+            showConfirmButton: false, // Hide the confirmation button
+            timer: 2000, // Auto-dismiss after 2 seconds
+          });
         }
-    
+
         // Change border color of the player based on data saver mode
-        var playerElement = document.querySelector('.player');
+        var playerElement = document.querySelector(".player");
         if (playerElement) {
-            if (dataSaverEnabled) {
-                playerElement.classList.add('player-green-border');
-            } else {
-                playerElement.classList.remove('player-green-border');
-            }
+          if (dataSaverEnabled) {
+            playerElement.classList.add("player-green-border");
+          } else {
+            playerElement.classList.remove("player-green-border");
+          }
         }
-    }
-    
+      }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-</body>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </body>
 </html>
